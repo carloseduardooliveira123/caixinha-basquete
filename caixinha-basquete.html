@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caixinha — Time de Basquete</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E85D04;
+    --orange-light: #FF8C42;
+    --orange-dim: #3D1A00;
+    --bg: #0D0D0D;
+    --surface: #161616;
+    --surface2: #1E1E1E;
+    --border: rgba(255,255,255,0.07);
+    --border-strong: rgba(255,255,255,0.14);
+    --text: #F0EDE8;
+    --muted: #888580;
+    --green: #4ADE80;
+    --green-bg: rgba(74,222,128,0.1);
+    --red: #F87171;
+    --red-bg: rgba(248,113,113,0.1);
+    --blue: #60A5FA;
+    --blue-bg: rgba(96,165,250,0.1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '🏀';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-size: 140px;
+    opacity: 0.06;
+    transform: rotate(-15deg);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 64px);
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .hero h1 span { color: var(--orange); }
+  .hero p { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .updated { font-size: 11px; color: var(--muted); margin-top: 4px; opacity: 0.6; }
+
+  /* MAIN */
+  .main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+  /* METRICS */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 2rem;
+  }
+  .metric {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .metric .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .metric .val { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: .02em; margin-top: 4px; color: var(--text); }
+  .metric .val.orange { color: var(--orange); }
+  .metric .val.green { color: var(--green); }
+  .metric .val.red { color: var(--red); }
+  .metric .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* SECTION */
+  .section { margin-bottom: 2rem; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* JOGOS */
+  .jogos { display: flex; gap: 8px; flex-wrap: wrap; }
+  .jogo {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: var(--surface);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .jogo.realizado {
+    border-color: var(--orange);
+    color: var(--orange-light);
+    background: rgba(232,93,4,0.1);
+  }
+  .jogo .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+  /* FILTERS */
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .filter-btn {
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--border-strong);
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+    transition: all .15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .filter-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+
+  /* TABLE */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 700px; }
+  thead tr { border-bottom: 1px solid var(--border); }
+  th {
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    text-align: left;
+    white-space: nowrap;
+  }
+  td {
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .nome { font-weight: 500; }
+
+  /* PRESENCES */
+  .presencas { display: flex; gap: 3px; }
+  .pr {
+    width: 18px; height: 18px;
+    border-radius: 4px;
+    font-size: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600;
+  }
+  .pr.sim { background: rgba(232,93,4,0.25); color: var(--orange-light); }
+  .pr.nao { background: var(--surface2); color: var(--muted); }
+  .pr.fut { background: transparent; border: 1px dashed var(--border-strong); color: transparent; }
+
+  /* BADGES */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge.deve { background: var(--red-bg); color: var(--red); }
+  .badge.quitada { background: var(--green-bg); color: var(--green); }
+  .badge.credito { background: var(--blue-bg); color: var(--blue); }
+
+  .dif { font-weight: 600; font-size: 13px; }
+  .dif.pos { color: var(--red); }
+  .dif.zero { color: var(--muted); }
+  .dif.neg { color: var(--blue); }
+
+  /* CAIXA */
+  .caixa {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .caixa::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--orange);
+    border-radius: 3px 0 0 3px;
+  }
+  .caixa-item .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+  .caixa-item .num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: .02em; margin-top: 2px; }
+  .caixa-item .num.green { color: var(--green); }
+  .caixa-item .num.red { color: var(--red); }
+  .caixa-item .num.neutral { color: var(--text); }
+
+  .sep { width: 1px; height: 40px; background: var(--border); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+    opacity: 0.5;
+  }
+
+  @media (max-width: 600px) {
+    .main { padding: 1rem; }
+    .hero { padding: 1.25rem; }
+    .caixa { gap: 1rem; }
+    .sep { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Caixinha <span>Basquete</span></h1>
+    <p>Controle financeiro e presenças — Temporada 2025</p>
+    <p class="updated" id="updated-date"></p>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- MÉTRICAS -->
+  <div class="metrics">
+    <div class="metric">
+      <div class="lbl">Total arrecadado</div>
+      <div class="val orange">R$ 800</div>
+      <div class="sub">16 atletas</div>
+    </div>
+    <div class="metric">
+      <div class="lbl">Gastos com jogos</div>
+      <div class="val red">R$ 507</div>
+      <div class="sub">3 jogos realizados</div>
+    </div>
+    <div class="metric">
+      <div class="lbl">Saldo em caixa</div>
+      <div class="val green">R$ 293</div>
+      <div class="sub">disponível</div>
+    </div>
+    <div class="metric">
+      <div class="lbl">Custo por jogo</div>
+      <div class="val">R$ 169</div>
+      <div class="sub">média por partida</div>
+    </div>
+    <div class="metric">
+      <div class="lbl">Valor por jogo/atleta</div>
+      <div class="val">R$ 20</div>
+      <div class="sub">cada presença</div>
+    </div>
+  </div>
+
+  <!-- JOGOS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Calendário de jogos</span>
+    </div>
+    <div class="jogos" id="jogos-container"></div>
+  </div>
+
+  <!-- TABELA -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">Atletas</span>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="filtrar('todos',this)">Todas</button>
+      <button class="filter-btn" onclick="filtrar('deve',this)">Devendo</button>
+      <button class="filter-btn" onclick="filtrar('quitada',this)">Quitadas</button>
+      <button class="filter-btn" onclick="filtrar('credito',this)">Com crédito</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Atleta</th>
+            <th>Pago</th>
+            <th>Jogos</th>
+            <th>Valor jogos</th>
+            <th>Diferença</th>
+            <th>Presenças</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CAIXA GERAL -->
+  <div class="caixa">
+    <div class="caixa-item">
+      <div class="lbl">Caixa geral</div>
+      <div class="num neutral">R$ 800</div>
+    </div>
+    <div class="sep"></div>
+    <div class="caixa-item">
+      <div class="lbl">Total gastos</div>
+      <div class="num red">- R$ 507</div>
+    </div>
+    <div class="sep"></div>
+    <div class="caixa-item">
+      <div class="lbl">Saldo atual</div>
+      <div class="num green">R$ 293</div>
+    </div>
+    <div class="sep"></div>
+    <div class="caixa-item">
+      <div class="lbl">Próximos jogos cobertos</div>
+      <div class="num neutral">~1</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Atualizado pela gestora da caixinha · apenas visualização</footer>
+
+<script>
+  // DATA
+  const jogos = [
+    {data:'23/03',realizado:true},
+    {data:'13/04',realizado:true},
+    {data:'20/04',realizado:true},
+    {data:'04/05',realizado:false},
+    {data:'18/05',realizado:false},
+    {data:'01/06',realizado:false},
+    {data:'15/06',realizado:false},
+    {data:'29/06',realizado:false},
+  ];
+
+  const atletas = [
+    {nome:'Aline',     pago:40,  jogos:0, vj:0,  dif:40,  pr:[0,0,0,0,0,0,0,0]},
+    {nome:'Bê',        pago:40,  jogos:2, vj:40, dif:0,   pr:[1,1,0,0,0,0,0,0]},
+    {nome:'Bea',       pago:40,  jogos:1, vj:20, dif:20,  pr:[0,0,1,0,0,0,0,0]},
+    {nome:'Beta',      pago:80,  jogos:3, vj:60, dif:20,  pr:[1,1,1,0,0,0,0,0]},
+    {nome:'Carlinha',  pago:40,  jogos:0, vj:0,  dif:40,  pr:[0,0,0,0,0,0,0,0]},
+    {nome:'Dama',      pago:80,  jogos:3, vj:60, dif:20,  pr:[1,1,1,0,0,0,0,0]},
+    {nome:'Diana',     pago:80,  jogos:2, vj:40, dif:40,  pr:[1,1,0,0,0,0,0,0]},
+    {nome:'Elaine',    pago:40,  jogos:2, vj:40, dif:0,   pr:[1,1,0,0,0,0,0,0]},
+    {nome:'Elizandra', pago:80,  jogos:3, vj:60, dif:20,  pr:[1,1,1,0,0,0,0,0]},
+    {nome:'Fe',        pago:80,  jogos:3, vj:60, dif:20,  pr:[1,1,1,0,0,0,0,0]},
+    {nome:'Gabi (Paganini)',pago:40,jogos:2,vj:40,dif:0,  pr:[1,0,1,0,0,0,0,0]},
+    {nome:'Isadora',   pago:0,   jogos:1, vj:20, dif:-20, pr:[0,0,1,0,0,0,0,0]},
+    {nome:'Mana',      pago:80,  jogos:3, vj:60, dif:20,  pr:[1,1,1,0,0,0,0,0]},
+    {nome:'Milena',    pago:40,  jogos:1, vj:20, dif:20,  pr:[0,0,1,0,0,0,0,0]},
+    {nome:'Paloma',    pago:40,  jogos:2, vj:40, dif:0,   pr:[0,1,1,0,0,0,0,0]},
+    {nome:'Pulee',     pago:0,   jogos:1, vj:20, dif:-20, pr:[1,0,0,0,0,0,0,0]},
+  ];
+
+  // DATA ATUALIZAÇÃO
+  const now = new Date();
+  document.getElementById('updated-date').textContent =
+    'Última atualização: ' + now.toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'});
+
+  // RENDER JOGOS
+  const jc = document.getElementById('jogos-container');
+  jogos.forEach(j => {
+    const el = document.createElement('div');
+    el.className = 'jogo' + (j.realizado ? ' realizado' : '');
+    el.innerHTML = `<span class="dot"></span>${j.data}`;
+    jc.appendChild(el);
+  });
+
+  // STATUS
+  function getStatus(dif) {
+    if (dif < 0)  return {cls:'credito', label:'Crédito R$'+Math.abs(dif)};
+    if (dif === 0) return {cls:'quitada', label:'Quitada'};
+    return {cls:'deve', label:'Deve R$'+dif};
+  }
+
+  // RENDER TABLE
+  function renderTabela(filtro) {
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+    atletas.forEach(a => {
+      const st = getStatus(a.dif);
+      if (filtro !== 'todos' && st.cls !== filtro) return;
+
+      const presHTML = a.pr.map((p, i) => {
+        const jogo = jogos[i];
+        if (!jogo.realizado) return `<span class="pr fut" title="Jogo ${jogo.data}">·</span>`;
+        return p
+          ? `<span class="pr sim" title="${jogo.data}">✓</span>`
+          : `<span class="pr nao" title="${jogo.data}">—</span>`;
+      }).join('');
+
+      const difCls = a.dif > 0 ? 'pos' : a.dif === 0 ? 'zero' : 'neg';
+      const difLabel = a.dif > 0 ? `R$ ${a.dif}` : a.dif === 0 ? '—' : `+ R$ ${Math.abs(a.dif)}`;
+
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-status', st.cls);
+      tr.innerHTML = `
+        <td class="nome">${a.nome}</td>
+        <td>R$ ${a.pago}</td>
+        <td>${a.jogos}</td>
+        <td>R$ ${a.vj}</td>
+        <td><span class="dif ${difCls}">${difLabel}</span></td>
+        <td><div class="presencas">${presHTML}</div></td>
+        <td><span class="badge ${st.cls}">${st.label}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function filtrar(tipo, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTabela(tipo);
+  }
+
+  renderTabela('todos');
+</script>
+</body>
+</html>
