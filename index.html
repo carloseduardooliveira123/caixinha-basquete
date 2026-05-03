@@ -3,448 +3,564 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Caixinha — Time de Basquete</title>
+<title>Caixinha — Basquete</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --orange: #E85D04;
-    --orange-light: #FF8C42;
-    --orange-dim: #3D1A00;
-    --bg: #0D0D0D;
-    --surface: #161616;
-    --surface2: #1E1E1E;
-    --border: rgba(255,255,255,0.07);
-    --border-strong: rgba(255,255,255,0.14);
-    --text: #F0EDE8;
-    --muted: #888580;
-    --green: #4ADE80;
-    --green-bg: rgba(74,222,128,0.1);
-    --red: #F87171;
-    --red-bg: rgba(248,113,113,0.1);
-    --blue: #60A5FA;
-    --blue-bg: rgba(96,165,250,0.1);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#E85D04;
+  --bg:#F5F3EF;
+  --surface:#FFFFFF;
+  --surface2:#EDEBE6;
+  --border:rgba(0,0,0,0.09);
+  --border-strong:rgba(0,0,0,0.18);
+  --text:#1A1714;
+  --muted:#7A746E;
+  --green:#166534;
+  --green-bg:rgba(22,101,52,0.09);
+  --red:#991B1B;
+  --red-bg:rgba(153,27,27,0.09);
+  --blue:#1E40AF;
+  --blue-bg:rgba(30,64,175,0.09);
+}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;min-height:100vh}
 
-  /* HEADER */
-  .hero {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 2rem 2rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '🏀';
-    position: absolute;
-    right: -10px;
-    top: -20px;
-    font-size: 140px;
-    opacity: 0.06;
-    transform: rotate(-15deg);
-    pointer-events: none;
-  }
-  .hero-inner { max-width: 1100px; margin: 0 auto; }
-  .hero h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(36px, 6vw, 64px);
-    letter-spacing: 0.04em;
-    color: var(--text);
-    line-height: 1;
-  }
-  .hero h1 span { color: var(--orange); }
-  .hero p { color: var(--muted); font-size: 13px; margin-top: 6px; }
-  .updated { font-size: 11px; color: var(--muted); margin-top: 4px; opacity: 0.6; }
+.hero{background:var(--surface);border-bottom:1px solid var(--border);padding:1.5rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'🏀';position:absolute;right:-10px;top:-20px;font-size:130px;opacity:.1;transform:rotate(-15deg);pointer-events:none}
+.hero-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:.04em;line-height:1}
+.hero h1 span{color:var(--orange)}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap}
 
-  /* MAIN */
-  .main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+.main{max-width:1200px;margin:0 auto;padding:1.5rem 2rem}
 
-  /* METRICS */
-  .metrics {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 12px;
-    margin-bottom: 2rem;
-  }
-  .metric {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .metric .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-  .metric .val { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: .02em; margin-top: 4px; color: var(--text); }
-  .metric .val.orange { color: var(--orange); }
-  .metric .val.green { color: var(--green); }
-  .metric .val.red { color: var(--red); }
-  .metric .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.tabs{display:flex;gap:4px;margin-bottom:1.5rem;background:var(--surface2);padding:4px;border-radius:10px;width:fit-content}
+.tab{padding:7px 18px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .15s}
+.tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,0.1)}
 
-  /* SECTION */
-  .section { margin-bottom: 2rem; }
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-  }
-  .section-title {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    color: var(--muted);
-    font-weight: 500;
-  }
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:1.5rem}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem}
+.metric .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:500}
+.metric .val{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:.02em;margin-top:2px}
+.metric .sub{font-size:11px;color:var(--muted);margin-top:1px}
 
-  /* JOGOS */
-  .jogos { display: flex; gap: 8px; flex-wrap: wrap; }
-  .jogo {
-    padding: 6px 14px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 500;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    background: var(--surface);
-    display: flex; align-items: center; gap: 6px;
-  }
-  .jogo.realizado {
-    border-color: var(--orange);
-    color: var(--orange-light);
-    background: rgba(232,93,4,0.1);
-  }
-  .jogo .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
+.card-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.card-title{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
 
-  /* FILTERS */
-  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .filter-btn {
-    padding: 6px 16px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 500;
-    border: 1px solid var(--border-strong);
-    color: var(--muted);
-    background: transparent;
-    cursor: pointer;
-    transition: all .15s;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .filter-btn:hover { border-color: var(--orange); color: var(--orange); }
-  .filter-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+.btn{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);font-family:'DM Sans',sans-serif;transition:all .12s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--surface2)}
+.btn.primary{background:var(--orange);color:#fff;border-color:var(--orange)}
+.btn.primary:hover{background:#c94d00;border-color:#c94d00}
+.btn.danger{color:var(--red);border-color:rgba(153,27,27,0.25)}
+.btn.danger:hover{background:var(--red-bg)}
+.btn.sm{padding:4px 10px;font-size:12px;border-radius:6px}
 
-  /* TABLE */
-  .table-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow-x: auto;
-  }
-  table { width: 100%; border-collapse: collapse; min-width: 700px; }
-  thead tr { border-bottom: 1px solid var(--border); }
-  th {
-    padding: 12px 16px;
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    color: var(--muted);
-    text-align: left;
-    white-space: nowrap;
-  }
-  td {
-    padding: 12px 16px;
-    font-size: 13px;
-    color: var(--text);
-    border-bottom: 1px solid var(--border);
-  }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(255,255,255,0.02); }
-  .nome { font-weight: 500; }
+input[type=text],input[type=number],input[type=date],select{
+  padding:7px 10px;border-radius:8px;border:1px solid var(--border-strong);
+  background:var(--surface);color:var(--text);font-family:'DM Sans',sans-serif;
+  font-size:13px;outline:none;transition:border .12s;width:100%
+}
+input:focus,select:focus{border-color:var(--orange)}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px;font-weight:500}
 
-  /* PRESENCES */
-  .presencas { display: flex; gap: 3px; }
-  .pr {
-    width: 18px; height: 18px;
-    border-radius: 4px;
-    font-size: 9px;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 600;
-  }
-  .pr.sim { background: rgba(232,93,4,0.25); color: var(--orange-light); }
-  .pr.nao { background: var(--surface2); color: var(--muted); }
-  .pr.fut { background: transparent; border: 1px dashed var(--border-strong); color: transparent; }
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:600px}
+thead tr{background:var(--surface2)}
+th{padding:10px 14px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);text-align:left;white-space:nowrap;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,0,0,0.015)}
 
-  /* BADGES */
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .badge.deve { background: var(--red-bg); color: var(--red); }
-  .badge.quitada { background: var(--green-bg); color: var(--green); }
-  .badge.credito { background: var(--blue-bg); color: var(--blue); }
+.badge{display:inline-block;padding:2px 9px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
+.badge.deve{background:var(--red-bg);color:var(--red)}
+.badge.quitada{background:var(--green-bg);color:var(--green)}
+.badge.credito{background:var(--blue-bg);color:var(--blue)}
 
-  .dif { font-weight: 600; font-size: 13px; }
-  .dif.pos { color: var(--red); }
-  .dif.zero { color: var(--muted); }
-  .dif.neg { color: var(--blue); }
+.presencas{display:flex;gap:3px;flex-wrap:wrap}
+.pr-dot{width:22px;height:22px;border-radius:5px;font-size:10px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:transform .1s}
+.pr-dot.sim{background:rgba(232,93,4,0.15);color:var(--orange)}
+.pr-dot.nao{background:var(--surface2);color:var(--muted)}
+.pr-dot.fut{background:transparent;border:1px dashed var(--border-strong);color:transparent;cursor:default}
+.pr-dot:not(.fut):hover{transform:scale(1.15)}
 
-  /* CAIXA */
-  .caixa {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .caixa::after {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--orange);
-    border-radius: 3px 0 0 3px;
-  }
-  .caixa-item .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
-  .caixa-item .num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: .02em; margin-top: 2px; }
-  .caixa-item .num.green { color: var(--green); }
-  .caixa-item .num.red { color: var(--red); }
-  .caixa-item .num.neutral { color: var(--text); }
+.jogos-list{display:flex;gap:8px;flex-wrap:wrap;padding:1.25rem}
+.jogo-chip{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);font-size:13px}
+.jogo-chip.realizado{border-color:rgba(232,93,4,0.4);background:rgba(232,93,4,0.07)}
+.jc-toggle{width:24px;height:24px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;transition:all .12s}
+.jogo-chip.realizado .jc-toggle{background:var(--orange);color:#fff}
+.jogo-chip:not(.realizado) .jc-toggle{background:var(--surface);color:var(--muted);border:1px solid var(--border-strong)}
+.jc-data{font-weight:500}
+.jc-custo{font-size:11px;color:var(--muted)}
+.del-jogo{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:0 2px;transition:color .1s}
+.del-jogo:hover{color:var(--red)}
 
-  .sep { width: 1px; height: 40px; background: var(--border); }
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;padding:1.25rem}
 
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 2rem;
-    font-size: 11px;
-    color: var(--muted);
-    border-top: 1px solid var(--border);
-    margin-top: 2rem;
-    opacity: 0.5;
-  }
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem}
+.modal{background:var(--surface);border-radius:14px;padding:1.5rem;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+.modal h2{font-size:18px;font-weight:600;margin-bottom:1.25rem}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem}
+.modal .fg{margin-bottom:12px}
+.hidden{display:none!important}
 
-  @media (max-width: 600px) {
-    .main { padding: 1rem; }
-    .hero { padding: 1.25rem; }
-    .caixa { gap: 1rem; }
-    .sep { display: none; }
-  }
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.filter-btn{padding:5px 14px;border-radius:100px;font-size:12px;font-weight:500;border:1px solid var(--border-strong);color:var(--muted);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .12s}
+.filter-btn:hover{border-color:var(--orange);color:var(--orange)}
+.filter-btn.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+
+.caixa-bar{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--orange);border-radius:10px;padding:1rem 1.25rem;display:flex;gap:2rem;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem}
+.caixa-item .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.caixa-item .num{font-family:'Bebas Neue',sans-serif;font-size:26px;margin-top:1px}
+
+.view{display:none}
+.view.active{display:block}
+
+@media(max-width:600px){
+  .main{padding:1rem}
+  .hero{padding:1rem}
+  .hero h1{font-size:32px}
+  .form-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
 <div class="hero">
   <div class="hero-inner">
-    <h1>Caixinha <span>Basquete</span></h1>
-    <p>Controle financeiro e presenças — Temporada 2025</p>
-    <p class="updated" id="updated-date"></p>
+    <div>
+      <h1>Caixinha <span>Basquete</span></h1>
+      <p style="font-size:12px;color:var(--muted);margin-top:2px" id="subtitle"></p>
+    </div>
+    <div class="hero-actions">
+      <button class="btn primary" onclick="abrirModalAtleta()">+ Atleta</button>
+      <button class="btn primary" onclick="abrirModalJogo()">+ Jogo</button>
+    </div>
   </div>
 </div>
 
 <div class="main">
+  <div class="tabs">
+    <button class="tab active" onclick="mudarView('dashboard',this)">Dashboard</button>
+    <button class="tab" onclick="mudarView('atletas',this)">Atletas</button>
+    <button class="tab" onclick="mudarView('jogos',this)">Jogos</button>
+    <button class="tab" onclick="mudarView('config',this)">Configurações</button>
+  </div>
 
-  <!-- MÉTRICAS -->
-  <div class="metrics">
-    <div class="metric">
-      <div class="lbl">Total arrecadado</div>
-      <div class="val orange">R$ 800</div>
-      <div class="sub">16 atletas</div>
+  <!-- DASHBOARD -->
+  <div class="view active" id="view-dashboard">
+    <div class="metrics" id="metrics-container"></div>
+    <div class="caixa-bar" id="caixa-bar"></div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Atletas</span>
+        <div class="filters">
+          <button class="filter-btn active" onclick="filtrar('todos',this)">Todas</button>
+          <button class="filter-btn" onclick="filtrar('credito',this)">Com crédito</button>
+          <button class="filter-btn" onclick="filtrar('quitada',this)">Quitadas</button>
+          <button class="filter-btn" onclick="filtrar('deve',this)">Devendo</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Atleta</th><th>Pago</th><th>Jogos</th><th>Val. jogos</th><th>Saldo</th><th>Presenças</th><th>Status</th>
+          </tr></thead>
+          <tbody id="tbody-dashboard"></tbody>
+        </table>
+      </div>
     </div>
-    <div class="metric">
-      <div class="lbl">Gastos com jogos</div>
-      <div class="val red">R$ 507</div>
-      <div class="sub">3 jogos realizados</div>
-    </div>
-    <div class="metric">
-      <div class="lbl">Saldo em caixa</div>
-      <div class="val green">R$ 293</div>
-      <div class="sub">disponível</div>
-    </div>
-    <div class="metric">
-      <div class="lbl">Custo por jogo</div>
-      <div class="val">R$ 169</div>
-      <div class="sub">média por partida</div>
-    </div>
-    <div class="metric">
-      <div class="lbl">Valor por jogo/atleta</div>
-      <div class="val">R$ 20</div>
-      <div class="sub">cada presença</div>
+  </div>
+
+  <!-- ATLETAS -->
+  <div class="view" id="view-atletas">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Gerenciar atletas</span>
+        <button class="btn primary" onclick="abrirModalAtleta()">+ Nova atleta</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nome</th><th>Pagamentos</th><th>Presenças</th><th>Ações</th></tr></thead>
+          <tbody id="tbody-atletas"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <!-- JOGOS -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-title">Calendário de jogos</span>
-    </div>
-    <div class="jogos" id="jogos-container"></div>
-  </div>
-
-  <!-- TABELA -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-title">Atletas</span>
-    </div>
-    <div class="filters">
-      <button class="filter-btn active" onclick="filtrar('todos',this)">Todas</button>
-      <button class="filter-btn" onclick="filtrar('deve',this)">Devendo</button>
-      <button class="filter-btn" onclick="filtrar('quitada',this)">Quitadas</button>
-      <button class="filter-btn" onclick="filtrar('credito',this)">Com crédito</button>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Atleta</th>
-            <th>Pago</th>
-            <th>Jogos</th>
-            <th>Valor jogos</th>
-            <th>Diferença</th>
-            <th>Presenças</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
+  <div class="view" id="view-jogos">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Jogos da temporada</span>
+        <button class="btn primary" onclick="abrirModalJogo()">+ Novo jogo</button>
+      </div>
+      <div class="jogos-list" id="jogos-list"></div>
     </div>
   </div>
 
-  <!-- CAIXA GERAL -->
-  <div class="caixa">
-    <div class="caixa-item">
-      <div class="lbl">Caixa geral</div>
-      <div class="num neutral">R$ 800</div>
-    </div>
-    <div class="sep"></div>
-    <div class="caixa-item">
-      <div class="lbl">Total gastos</div>
-      <div class="num red">- R$ 507</div>
-    </div>
-    <div class="sep"></div>
-    <div class="caixa-item">
-      <div class="lbl">Saldo atual</div>
-      <div class="num green">R$ 293</div>
-    </div>
-    <div class="sep"></div>
-    <div class="caixa-item">
-      <div class="lbl">Próximos jogos cobertos</div>
-      <div class="num neutral">~1</div>
+  <!-- CONFIG -->
+  <div class="view" id="view-config">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Configurações</span></div>
+      <div class="form-grid">
+        <div><label>Nome do time</label><input type="text" id="cfg-nome" oninput="salvarConfig()"></div>
+        <div><label>Temporada</label><input type="text" id="cfg-temporada" oninput="salvarConfig()"></div>
+        <div><label>Mensalidade padrão (R$)</label><input type="number" id="cfg-mensalidade" oninput="salvarConfig()"></div>
+        <div><label>Custo por jogo/atleta (R$)</label><input type="number" id="cfg-custojogo" oninput="salvarConfig()"></div>
+      </div>
+      <div style="padding:0 1.25rem 1.25rem">
+        <div style="background:var(--red-bg);border:1px solid rgba(153,27,27,0.2);border-radius:8px;padding:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+          <div>
+            <div style="font-weight:500;color:var(--red);font-size:13px">Resetar todos os dados</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px">Apaga atletas, jogos e pagamentos</div>
+          </div>
+          <button class="btn danger sm" onclick="confirmarResetar()">Resetar</button>
+        </div>
+      </div>
     </div>
   </div>
-
 </div>
 
-<footer>Atualizado pela gestora da caixinha · apenas visualização</footer>
+<!-- MODAL ATLETA -->
+<div class="modal-overlay hidden" id="modal-atleta">
+  <div class="modal">
+    <h2 id="modal-atleta-titulo">Nova atleta</h2>
+    <div class="fg"><label>Nome</label><input type="text" id="atleta-nome" placeholder="Nome completo"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="fecharModal('modal-atleta')">Cancelar</button>
+      <button class="btn primary" onclick="salvarAtleta()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL JOGO -->
+<div class="modal-overlay hidden" id="modal-jogo">
+  <div class="modal">
+    <h2>Novo jogo</h2>
+    <div class="fg"><label>Data do jogo</label><input type="date" id="jogo-data"></div>
+    <div class="fg"><label>Custo total do jogo (R$) — opcional</label><input type="number" id="jogo-custo" placeholder="Deixe vazio para usar custo por atleta"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="fecharModal('modal-jogo')">Cancelar</button>
+      <button class="btn primary" onclick="salvarJogo()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CONFIRMAR -->
+<div class="modal-overlay hidden" id="modal-confirmar">
+  <div class="modal">
+    <h2 id="confirmar-titulo">Confirmar</h2>
+    <p id="confirmar-msg" style="color:var(--muted);font-size:13px;line-height:1.5"></p>
+    <div class="modal-actions">
+      <button class="btn" onclick="fecharModal('modal-confirmar')">Cancelar</button>
+      <button class="btn danger" id="confirmar-btn">Confirmar</button>
+    </div>
+  </div>
+</div>
 
 <script>
-  // DATA
-  const jogos = [
-    {data:'23/03',realizado:true},
-    {data:'13/04',realizado:true},
-    {data:'20/04',realizado:true},
-    {data:'04/05',realizado:false},
-    {data:'18/05',realizado:false},
-    {data:'01/06',realizado:false},
-    {data:'15/06',realizado:false},
-    {data:'29/06',realizado:false},
-  ];
+// ===== ESTADO =====
+let E = carregar();
 
-  const atletas = [
-    {nome:'Aline',     pago:40,  jogos:0, vj:0,  dif:40,  pr:[0,0,0,0,0,0,0,0]},
-    {nome:'Bê',        pago:40,  jogos:2, vj:40, dif:0,   pr:[1,1,0,0,0,0,0,0]},
-    {nome:'Bea',       pago:40,  jogos:1, vj:20, dif:20,  pr:[0,0,1,0,0,0,0,0]},
-    {nome:'Beta',      pago:80,  jogos:3, vj:60, dif:20,  pr:[1,1,1,0,0,0,0,0]},
-    {nome:'Carlinha',  pago:40,  jogos:0, vj:0,  dif:40,  pr:[0,0,0,0,0,0,0,0]},
-    {nome:'Dama',      pago:80,  jogos:3, vj:60, dif:20,  pr:[1,1,1,0,0,0,0,0]},
-    {nome:'Diana',     pago:80,  jogos:2, vj:40, dif:40,  pr:[1,1,0,0,0,0,0,0]},
-    {nome:'Elaine',    pago:40,  jogos:2, vj:40, dif:0,   pr:[1,1,0,0,0,0,0,0]},
-    {nome:'Elizandra', pago:80,  jogos:3, vj:60, dif:20,  pr:[1,1,1,0,0,0,0,0]},
-    {nome:'Fe',        pago:80,  jogos:3, vj:60, dif:20,  pr:[1,1,1,0,0,0,0,0]},
-    {nome:'Gabi (Paganini)',pago:40,jogos:2,vj:40,dif:0,  pr:[1,0,1,0,0,0,0,0]},
-    {nome:'Isadora',   pago:0,   jogos:1, vj:20, dif:-20, pr:[0,0,1,0,0,0,0,0]},
-    {nome:'Mana',      pago:80,  jogos:3, vj:60, dif:20,  pr:[1,1,1,0,0,0,0,0]},
-    {nome:'Milena',    pago:40,  jogos:1, vj:20, dif:20,  pr:[0,0,1,0,0,0,0,0]},
-    {nome:'Paloma',    pago:40,  jogos:2, vj:40, dif:0,   pr:[0,1,1,0,0,0,0,0]},
-    {nome:'Pulee',     pago:0,   jogos:1, vj:20, dif:-20, pr:[1,0,0,0,0,0,0,0]},
-  ];
+function inicial() {
+  return {
+    config:{nome:'Time Feminino',temporada:'2025',mensalidade:40,custoJogo:20},
+    atletas:[
+      {id:1,nome:'Aline',pag:[40]},
+      {id:2,nome:'Bê',pag:[40]},
+      {id:3,nome:'Bea',pag:[40]},
+      {id:4,nome:'Beta',pag:[40,40]},
+      {id:5,nome:'Carlinha',pag:[40]},
+      {id:6,nome:'Dama',pag:[40,40]},
+      {id:7,nome:'Diana',pag:[40,40]},
+      {id:8,nome:'Elaine',pag:[40]},
+      {id:9,nome:'Elizandra',pag:[40,40]},
+      {id:10,nome:'Fe',pag:[40,40]},
+      {id:11,nome:'Gabi (Paganini)',pag:[40]},
+      {id:12,nome:'Isadora',pag:[]},
+      {id:13,nome:'Mana',pag:[40,40]},
+      {id:14,nome:'Milena',pag:[40]},
+      {id:15,nome:'Paloma',pag:[40]},
+      {id:16,nome:'Pulee',pag:[]},
+    ],
+    jogos:[
+      {id:1,data:'2025-03-23',custo:null,realizado:true},
+      {id:2,data:'2025-04-13',custo:null,realizado:true},
+      {id:3,data:'2025-04-20',custo:null,realizado:true},
+      {id:4,data:'2025-05-04',custo:null,realizado:false},
+      {id:5,data:'2025-05-18',custo:null,realizado:false},
+      {id:6,data:'2025-06-01',custo:null,realizado:false},
+      {id:7,data:'2025-06-15',custo:null,realizado:false},
+      {id:8,data:'2025-06-29',custo:null,realizado:false},
+    ],
+    presencas:{
+      1:{2:true,4:true,6:true,7:true,8:true,9:true,10:true,11:true,13:true,16:true},
+      2:{2:true,4:true,6:true,7:true,8:true,9:true,10:true,13:true,15:true},
+      3:{3:true,4:true,6:true,9:true,10:true,11:true,12:true,13:true,14:true,15:true},
+    },
+    nextId:20
+  };
+}
 
-  // DATA ATUALIZAÇÃO
-  const now = new Date();
-  document.getElementById('updated-date').textContent =
-    'Última atualização: ' + now.toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'});
+function carregar(){
+  try{const s=localStorage.getItem('caixinha-bskt');return s?JSON.parse(s):inicial();}catch(e){return inicial();}
+}
+function salvar(){localStorage.setItem('caixinha-bskt',JSON.stringify(E));renderTudo();}
 
-  // RENDER JOGOS
-  const jc = document.getElementById('jogos-container');
-  jogos.forEach(j => {
-    const el = document.createElement('div');
-    el.className = 'jogo' + (j.realizado ? ' realizado' : '');
-    el.innerHTML = `<span class="dot"></span>${j.data}`;
-    jc.appendChild(el);
+// ===== CÁLCULOS =====
+const totalPago = a => (a.pag||[]).reduce((s,v)=>s+v,0);
+const nJogos = id => E.jogos.filter(j=>j.realizado&&E.presencas[j.id]&&E.presencas[j.id][id]).length;
+const valJogos = id => nJogos(id)*E.config.custoJogo;
+const saldo = a => totalPago(a)-valJogos(a.id);
+const nPresentes = jid => Object.values(E.presencas[jid]||{}).filter(Boolean).length;
+const totalCaixa = () => E.atletas.reduce((s,a)=>s+totalPago(a),0);
+const totalGastos = () => E.jogos.filter(j=>j.realizado).reduce((s,j)=>s+(j.custo||(E.config.custoJogo*nPresentes(j.id))),0);
+const saldoCaixa = () => totalCaixa()-totalGastos();
+const fmtData = d=>{const[y,m,dia]=d.split('-');return`${dia}/${m}/${y}`;};
+
+function status(s){
+  if(s>0)return{cls:'credito',label:`Crédito R$${s}`};
+  if(s===0)return{cls:'quitada',label:'Quitada'};
+  return{cls:'deve',label:`Deve R$${Math.abs(s)}`};
+}
+
+// ===== RENDER =====
+let filtroAtual='todos';
+
+function renderTudo(){
+  renderMetrics();renderCaixa();renderDashboard();renderAtletas();renderJogos();renderConfig();
+}
+
+function renderMetrics(){
+  const nR=E.jogos.filter(j=>j.realizado).length;
+  const sc=saldoCaixa();
+  document.getElementById('metrics-container').innerHTML=`
+    <div class="metric"><div class="lbl">Total arrecadado</div><div class="val" style="color:var(--orange)">R$ ${totalCaixa()}</div><div class="sub">${E.atletas.length} atletas</div></div>
+    <div class="metric"><div class="lbl">Gastos com jogos</div><div class="val" style="color:var(--red)">R$ ${totalGastos()}</div><div class="sub">${nR} jogo${nR!==1?'s':''} realizado${nR!==1?'s':''}</div></div>
+    <div class="metric"><div class="lbl">Saldo em caixa</div><div class="val" style="color:${sc>=0?'var(--green)':'var(--red)'}">R$ ${sc}</div><div class="sub">disponível</div></div>
+    <div class="metric"><div class="lbl">Custo/jogo por atleta</div><div class="val">R$ ${E.config.custoJogo}</div><div class="sub">configurável</div></div>
+    <div class="metric"><div class="lbl">Jogos futuros</div><div class="val">${E.jogos.filter(j=>!j.realizado).length}</div><div class="sub">agendados</div></div>
+  `;
+}
+
+function renderCaixa(){
+  const sc=saldoCaixa();
+  const prox=sc>0?Math.floor(sc/(E.config.custoJogo*Math.max(E.atletas.length,1))):0;
+  document.getElementById('caixa-bar').innerHTML=`
+    <div class="caixa-item"><div class="lbl">Entrada</div><div class="num" style="color:var(--text)">R$ ${totalCaixa()}</div></div>
+    <div style="width:1px;height:36px;background:var(--border)"></div>
+    <div class="caixa-item"><div class="lbl">Saída</div><div class="num" style="color:var(--red)">- R$ ${totalGastos()}</div></div>
+    <div style="width:1px;height:36px;background:var(--border)"></div>
+    <div class="caixa-item"><div class="lbl">Saldo</div><div class="num" style="color:${sc>=0?'var(--green)':'var(--red)'}">R$ ${sc}</div></div>
+    <div style="width:1px;height:36px;background:var(--border)"></div>
+    <div class="caixa-item"><div class="lbl">Jogos cobertos</div><div class="num" style="color:var(--orange)">~${prox}</div></div>
+  `;
+}
+
+function renderDashboard(){
+  const tbody=document.getElementById('tbody-dashboard');
+  tbody.innerHTML='';
+  const jR=E.jogos.filter(j=>j.realizado);
+  const jF=E.jogos.filter(j=>!j.realizado);
+  E.atletas.forEach(a=>{
+    const s=saldo(a);const st=status(s);
+    if(filtroAtual!=='todos'&&st.cls!==filtroAtual)return;
+    const pres=[
+      ...jR.map(j=>{const p=E.presencas[j.id]&&E.presencas[j.id][a.id];return`<button class="pr-dot ${p?'sim':'nao'}" title="${fmtData(j.data)}" onclick="togglePresenca(${j.id},${a.id})">${p?'✓':'—'}</button>`;}),
+      ...jF.map(j=>`<span class="pr-dot fut" title="${fmtData(j.data)}">·</span>`)
+    ].join('');
+    const sLabel=s>0?`+ R$ ${s}`:s===0?'—':`R$ ${Math.abs(s)}`;
+    const sCss=s>0?'var(--blue)':s===0?'var(--muted)':'var(--red)';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td style="font-weight:500">${a.nome}</td>
+      <td>R$ ${totalPago(a)}</td>
+      <td>${nJogos(a.id)}</td>
+      <td>R$ ${valJogos(a.id)}</td>
+      <td style="font-weight:600;color:${sCss}">${sLabel}</td>
+      <td><div class="presencas">${pres}</div></td>
+      <td><span class="badge ${st.cls}">${st.label}</span></td>
+    `;
+    tbody.appendChild(tr);
   });
+}
 
-  // STATUS
-  function getStatus(dif) {
-    if (dif < 0)  return {cls:'credito', label:'Crédito R$'+Math.abs(dif)};
-    if (dif === 0) return {cls:'quitada', label:'Quitada'};
-    return {cls:'deve', label:'Deve R$'+dif};
-  }
+function renderAtletas(){
+  const tbody=document.getElementById('tbody-atletas');
+  tbody.innerHTML='';
+  const jR=E.jogos.filter(j=>j.realizado);
+  E.atletas.forEach(a=>{
+    const tags=(a.pag||[]).map((p,i)=>`<span style="display:inline-flex;align-items:center;gap:4px;background:var(--surface2);border-radius:6px;padding:2px 8px;font-size:12px;margin:2px">R$${p}<button onclick="remPag(${a.id},${i})" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;line-height:1;padding:0">×</button></span>`).join('');
+    const pres=jR.map(j=>{const p=E.presencas[j.id]&&E.presencas[j.id][a.id];return`<button class="pr-dot ${p?'sim':'nao'}" title="${fmtData(j.data)}" onclick="togglePresenca(${j.id},${a.id})">${p?'✓':'—'}</button>`;}).join('');
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td style="font-weight:500">${a.nome}</td>
+      <td>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;margin-bottom:6px;min-height:24px">${tags||'<span style="color:var(--muted);font-size:12px">Nenhum</span>'}</div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <input type="number" id="pi-${a.id}" placeholder="R$" style="width:75px" min="0">
+          <button class="btn sm primary" onclick="addPag(${a.id})">+ Pagar</button>
+        </div>
+      </td>
+      <td><div class="presencas">${pres||'<span style="color:var(--muted);font-size:12px">Sem jogos</span>'}</div></td>
+      <td>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn sm" onclick="editAtleta(${a.id})">✏️ Editar</button>
+          <button class="btn sm danger" onclick="confirmarExcluirAtleta(${a.id})">Excluir</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 
-  // RENDER TABLE
-  function renderTabela(filtro) {
-    const tbody = document.getElementById('tbody');
-    tbody.innerHTML = '';
-    atletas.forEach(a => {
-      const st = getStatus(a.dif);
-      if (filtro !== 'todos' && st.cls !== filtro) return;
+function renderJogos(){
+  const c=document.getElementById('jogos-list');c.innerHTML='';
+  if(!E.jogos.length){c.innerHTML='<p style="color:var(--muted);font-size:13px">Nenhum jogo cadastrado.</p>';return;}
+  [...E.jogos].sort((a,b)=>a.data.localeCompare(b.data)).forEach(j=>{
+    const div=document.createElement('div');
+    div.className='jogo-chip'+(j.realizado?' realizado':'');
+    const custoInfo=j.custo?`R$${j.custo} fixo`:`R$${E.config.custoJogo}/atleta`;
+    div.innerHTML=`
+      <button class="jc-toggle" onclick="toggleJogo(${j.id})">${j.realizado?'✓':'○'}</button>
+      <div>
+        <div class="jc-data">${fmtData(j.data)}</div>
+        <div class="jc-custo">${j.realizado?`${nPresentes(j.id)} presentes · `:''}${custoInfo}</div>
+      </div>
+      <button class="del-jogo" onclick="confirmarExcluirJogo(${j.id})" title="Excluir">×</button>
+    `;
+    c.appendChild(div);
+  });
+}
 
-      const presHTML = a.pr.map((p, i) => {
-        const jogo = jogos[i];
-        if (!jogo.realizado) return `<span class="pr fut" title="Jogo ${jogo.data}">·</span>`;
-        return p
-          ? `<span class="pr sim" title="${jogo.data}">✓</span>`
-          : `<span class="pr nao" title="${jogo.data}">—</span>`;
-      }).join('');
+function renderConfig(){
+  document.getElementById('cfg-nome').value=E.config.nome||'';
+  document.getElementById('cfg-temporada').value=E.config.temporada||'';
+  document.getElementById('cfg-mensalidade').value=E.config.mensalidade||'';
+  document.getElementById('cfg-custojogo').value=E.config.custoJogo||'';
+  document.getElementById('subtitle').textContent=`${E.config.nome} · Temporada ${E.config.temporada}`;
+}
 
-      const difCls = a.dif > 0 ? 'pos' : a.dif === 0 ? 'zero' : 'neg';
-      const difLabel = a.dif > 0 ? `R$ ${a.dif}` : a.dif === 0 ? '—' : `+ R$ ${Math.abs(a.dif)}`;
+// ===== AÇÕES =====
+function filtrar(tipo,btn){
+  filtroAtual=tipo;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDashboard();
+}
 
-      const tr = document.createElement('tr');
-      tr.setAttribute('data-status', st.cls);
-      tr.innerHTML = `
-        <td class="nome">${a.nome}</td>
-        <td>R$ ${a.pago}</td>
-        <td>${a.jogos}</td>
-        <td>R$ ${a.vj}</td>
-        <td><span class="dif ${difCls}">${difLabel}</span></td>
-        <td><div class="presencas">${presHTML}</div></td>
-        <td><span class="badge ${st.cls}">${st.label}</span></td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
+function togglePresenca(jid,aid){
+  if(!E.presencas[jid])E.presencas[jid]={};
+  E.presencas[jid][aid]=!E.presencas[jid][aid];
+  salvar();
+}
 
-  function filtrar(tipo, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderTabela(tipo);
-  }
+function toggleJogo(id){
+  const j=E.jogos.find(j=>j.id===id);if(j){j.realizado=!j.realizado;salvar();}
+}
 
-  renderTabela('todos');
+function addPag(aid){
+  const inp=document.getElementById('pi-'+aid);
+  const v=parseFloat(inp.value);
+  if(!v||v<=0){alert('Digite um valor válido.');return;}
+  const a=E.atletas.find(a=>a.id===aid);
+  if(!a.pag)a.pag=[];
+  a.pag.push(v);inp.value='';salvar();
+}
+
+function remPag(aid,idx){
+  const a=E.atletas.find(a=>a.id===aid);a.pag.splice(idx,1);salvar();
+}
+
+let editandoId=null;
+function abrirModalAtleta(){
+  editandoId=null;
+  document.getElementById('atleta-nome').value='';
+  document.getElementById('modal-atleta-titulo').textContent='Nova atleta';
+  document.getElementById('modal-atleta').classList.remove('hidden');
+}
+function editAtleta(id){
+  const a=E.atletas.find(a=>a.id===id);
+  editandoId=id;
+  document.getElementById('atleta-nome').value=a.nome;
+  document.getElementById('modal-atleta-titulo').textContent='Editar atleta';
+  document.getElementById('modal-atleta').classList.remove('hidden');
+}
+function salvarAtleta(){
+  const nome=document.getElementById('atleta-nome').value.trim();
+  if(!nome){alert('Digite o nome.');return;}
+  if(editandoId){E.atletas.find(a=>a.id===editandoId).nome=nome;}
+  else{E.atletas.push({id:E.nextId++,nome,pag:[]});}
+  fecharModal('modal-atleta');salvar();
+}
+
+function abrirModalJogo(){
+  document.getElementById('jogo-data').value='';
+  document.getElementById('jogo-custo').value='';
+  document.getElementById('modal-jogo').classList.remove('hidden');
+}
+function salvarJogo(){
+  const data=document.getElementById('jogo-data').value;
+  if(!data){alert('Selecione a data.');return;}
+  const custo=parseFloat(document.getElementById('jogo-custo').value)||null;
+  E.jogos.push({id:E.nextId++,data,custo,realizado:false});
+  fecharModal('modal-jogo');salvar();
+}
+
+function confirmarExcluirAtleta(id){
+  const a=E.atletas.find(a=>a.id===id);
+  confirmar(`Excluir ${a.nome}?`,`Todos os dados de "${a.nome}" serão removidos permanentemente.`,()=>{
+    E.atletas=E.atletas.filter(a=>a.id!==id);
+    Object.values(E.presencas).forEach(p=>delete p[id]);
+    salvar();
+  });
+}
+
+function confirmarExcluirJogo(id){
+  const j=E.jogos.find(j=>j.id===id);
+  confirmar(`Excluir jogo de ${fmtData(j.data)}?`,'As presenças registradas para este jogo também serão removidas.',()=>{
+    E.jogos=E.jogos.filter(j=>j.id!==id);
+    delete E.presencas[id];
+    salvar();
+  });
+}
+
+function confirmarResetar(){
+  confirmar('Resetar todos os dados?','Isso apaga TUDO — atletas, jogos e pagamentos. Não tem como desfazer.',()=>{
+    localStorage.removeItem('caixinha-bskt');
+    E=inicial();salvar();
+  });
+}
+
+function confirmar(titulo,msg,cb){
+  document.getElementById('confirmar-titulo').textContent=titulo;
+  document.getElementById('confirmar-msg').textContent=msg;
+  document.getElementById('confirmar-btn').onclick=()=>{cb();fecharModal('modal-confirmar');};
+  document.getElementById('modal-confirmar').classList.remove('hidden');
+}
+
+function salvarConfig(){
+  E.config.nome=document.getElementById('cfg-nome').value;
+  E.config.temporada=document.getElementById('cfg-temporada').value;
+  E.config.mensalidade=parseFloat(document.getElementById('cfg-mensalidade').value)||40;
+  E.config.custoJogo=parseFloat(document.getElementById('cfg-custojogo').value)||20;
+  salvar();
+}
+
+function fecharModal(id){document.getElementById(id).classList.add('hidden');}
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{if(e.target===m)m.classList.add('hidden');});
+});
+
+function mudarView(v,btn){
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  btn.classList.add('active');
+}
+
+renderTudo();
 </script>
 </body>
 </html>
